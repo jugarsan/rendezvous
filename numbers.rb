@@ -1,3 +1,10 @@
+# This week’s question:
+# Given a string, return true if the string represents a valid number. A valid number can include integers, a ., -, or +.
+#
+# Examples of valid numbers: “7”, “0011”, “+3.14”, “4.”, “-.9”, “-123.456”, “-0.1”
+#
+# Examples of invalid numbers: “abc”, “1a”, “e8”, “–6”, “-+3”, “95x54e53.”
+
 loop do
   puts "Enter any string:"
   user_string = gets.chop
