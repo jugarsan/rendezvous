@@ -5,36 +5,29 @@
 #
 # Examples of invalid numbers: “abc”, “1a”, “e8”, “–6”, “-+3”, “95x54e53.”
 
-loop do
-  puts "Enter any string:"
-  user_string = gets.chop
+require 'test/unit/assertions'
+include  Test::Unit::Assertions
 
-  if user_string == 'quit'
-    break
-  end
-
-  has_symbol = !!user_string[0].match(/^\+?\-?\W/)
-
+def is_a_number?(text)
   begin
-    if user_string.length > 1 && has_symbol
-      result = user_string[1..-1].match(/^\d*\.?\d*/)
-    else
-      result = user_string.match(/^\d*\.?\d*/)
-    end
-  rescue ArgumentError
-    result = nil
+    result = text.match(/^[+-]?\d*\.?\d*$/)[0]
+    return result.eql?(text)
+  rescue
+    return false
   end
 
-  if !result
-    puts 'this is not a number'
-  else
-    matching_string = has_symbol ? user_string[0] + result[0] : result[0]
-
-    if matching_string.eql?(user_string)
-      puts "this is a number"
-    else
-      puts "this is not a number"
-    end
-  end
-  puts
 end
+
+assert_equal true, is_a_number?('7'), 'Should be true'
+assert_equal true, is_a_number?('0011'), 'Should be true'
+assert_equal true, is_a_number?('+3.14'), 'Should be true'
+assert_equal true, is_a_number?('4.'), 'Should be true'
+assert_equal true, is_a_number?('-.9'), 'Should be true'
+assert_equal true, is_a_number?('-123.456'), 'Should be true'
+assert_equal true, is_a_number?('-0.1'), 'Should be true'
+
+assert_equal false, is_a_number?('abc'), 'Should be false'
+assert_equal false, is_a_number?('1a'), 'Should be false'
+assert_equal false, is_a_number?('e8'), 'Should be false'
+assert_equal false, is_a_number?('-+3'), 'Should be false'
+assert_equal false, is_a_number?('95x54e53.'), 'Should be false'
